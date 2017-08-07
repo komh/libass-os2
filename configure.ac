@@ -86,7 +86,11 @@ AS_IF([test x$enable_asm != xno], [
                 ASFLAGS="$ASFLAGS -DHAVE_ALIGNED_STACK=1"
             ], [
                 ASFLAGS="$ASFLAGS -DHAVE_ALIGNED_STACK=0 -DPREFIX"
-            ])
+            ])],
+        [*os2*], [
+            AS=nasm
+            ASFLAGS=${ASFLAGS%-m x86}
+            ASFLAGS="$ASFLAGS -f aout -DPREFIX -DHAVE_ALIGNED_STACK=0 -ix86/"
         ])
     AS_IF([test x$INTEL = xtrue], [
         AC_CHECK_PROG([yasm_check], [$AS], [yes])
